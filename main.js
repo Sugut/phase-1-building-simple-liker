@@ -8,31 +8,32 @@ const FULL_HEART = '♥'
 //   handleMouseUp,
 //   passiveSupported ? { passive: true } : false
 // );
-document.querySelectorAll("like-glyph").addEventListener("click",myFunction)
+const likes =document.querySelectorAll(".like-glyph");
 
-let myFunction=(e)=>{
+function handleClick(e){
   let heart = e.target;
-}
+
 mimicServerCall()
-.then((response)=> {
-                   if(response.ok){
-                   heart.innerText=FULL_HEART[heart.innerText]
-                   heart.className="activated-heart"
+.then(()=> { 
+                   if(heart.innerText===FULL_HEART){
+                   heart.innerText=EMPTY_HEART
+                   heart.className=""
                   }
                   else {
-                    heart.innerText=EMPTY_HEART[heart.innerText]
-                    heart.className=" "
+                    heart.innerText=FULL_HEART
+                    heart.className="activated-heart"
                  }
 })
 
-.catch((error)=> {
+.catch(()=> {
      const errorModal=document.getElementById("modal")
-     errorModal.textContent= error;
+     errorModal.removeAttribute("class")
      setTimeout(() => errorModal.className ="hidden", 3000)
 });
-
- 
-
+}
+for(let like of likes){
+  like.addEventListener("click", handleClick);
+}
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
